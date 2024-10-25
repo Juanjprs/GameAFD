@@ -1,7 +1,25 @@
 [gd_scene load_steps=55 format=3 uid="uid://b8paa4407ucq1"]
 
-[ext_resource type="Script" path="res://levels/Tp.gd" id="1_snqga"]
 [ext_resource type="Texture2D" uid="uid://ycu6tsfnl35v" path="res://assets/Necromancer/Idle/spr_NecromancerIdle_strip50.png" id="2_uftf6"]
+
+[sub_resource type="GDScript" id="GDScript_a7yru"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func action() -> void:
+	Dialogic.signal_event.connect(tpVila)
+	Dialogic.start(\"tpVilaDosReis\") # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func tpVila(argument: String):
+	if argument == \"tp\":
+		get_tree().change_scene_to_file(\"res://levels/viladoreis.tscn\")
+"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_42hd3"]
 atlas = ExtResource("2_uftf6")
@@ -366,8 +384,7 @@ size = Vector2(11, 35)
 
 [node name="Tp" type="Area2D"]
 position = Vector2(568, -26)
-script = ExtResource("1_snqga")
-next_level = "res://levels/world_02.tscn"
+script = SubResource("GDScript_a7yru")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 2

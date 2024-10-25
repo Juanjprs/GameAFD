@@ -8,6 +8,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var is_jumping := false
 
 @onready var animation := $animated as AnimatedSprite2D
+@onready var actionable_finder: Area2D = $Marker2D/ActionableFinder
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -15,15 +16,13 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("w") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		is_jumping = true
 	elif is_on_floor():
 		is_jumping = false
 
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("a", "d")
 	
 	if direction != 0:
 		velocity.x = direction * SPEED
@@ -37,3 +36,7 @@ func _physics_process(delta):
 		animation.play("warrior_idle")
 		
 	move_and_slide()
+	
+
+func player():
+	pass
